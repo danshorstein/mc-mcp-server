@@ -1,0 +1,14 @@
+[project]
+name = "mc-mcp-server"
+version = "0.1.0"
+description = "Minecraft OverWatch MCP Server for high-speed block editing and data visualization."
+dependencies = [
+    "mcp",
+    "requests",
+    "pillow",
+    "numpy",
+]
+
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
