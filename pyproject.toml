@@ -22,3 +22,10 @@ mc-mcp = "server:mcp.run"
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
 
+[tool.setuptools]
+packages = ["core"]
+py-modules = ["server"]
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "*.md"]
+
