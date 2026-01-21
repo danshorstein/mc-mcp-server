@@ -4,25 +4,49 @@ An MCP (Model Context Protocol) server that gives AI agents "God-mode" control o
 
 ## Features
 - **Spatial Awareness**: The AI knows where you are and what you're looking at.
+- **World Management**: Inspect blocks, get build area bounds, and monitor world state.
 - **Mass Block Editing**: Uses optimized `fill` batching for near-instant construction.
-- **Data Visualization**: Render images, charts, and dashboards directly into the Minecraft world with high-quality dithering.
+- **Data Visualization**: Render images directly into the Minecraft world with high-quality dithering.
+- **Smart Rendering**: Only updates blocks that have changed (using differential state tracking).
 
-## Installation
+## Installation & Usage
 
-1. **Install GDMC HTTP Mod**:
-   - Ensure you have the GDMC HTTP interface mod installed and running in your Minecraft instance (default port 9000).
+### Option 1: Zero-Install (Run from GitHub)
+The easiest way to run this server is via `uvx` (part of the [uv](https://astral.sh/uv/) ecosystem). This runs the server directly from GitHub without manual cloning or setup.
 
-2. **Setup Dependencies**:
+**Claude Desktop Config:**
+```json
+{
+  "mcpServers": {
+    "minecraft": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/YOUR_USERNAME/mc-mcp-server",
+        "mc-mcp"
+      ],
+      "env": {
+        "GDMC_URL": "http://localhost:9000"
+      }
+    }
+  }
+}
+```
+
+### Option 2: Local Development Setup
+1. **Clone & Setup**:
    ```bash
-   pip install mcp requests pillow numpy
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip install .
    ```
 
-3. **Run the Server**:
+2. **Run**:
    ```bash
-   python server.py
+   mc-mcp
    ```
 
-## Configuration for Claude Desktop
+## Configuration for Claude Desktop (Local)
 
 Add the following to your `claude_desktop_config.json`:
 
@@ -30,7 +54,7 @@ Add the following to your `claude_desktop_config.json`:
 {
   "mcpServers": {
     "minecraft": {
-      "command": "python3",
+      "command": "/ABSOLUTE/PATH/TO/mc-mcp-server/.venv/bin/python",
       "args": ["/ABSOLUTE/PATH/TO/mc-mcp-server/server.py"],
       "env": {
         "GDMC_URL": "http://localhost:9000"
@@ -43,19 +67,25 @@ Add the following to your `claude_desktop_config.json`:
 ## Tools Included
 
 - `get_player_context`: Returns coordinates, rotation, and cardinal facing.
-- `place_block`: Simple single-block placement.
-- `fill_area`: Standard mass fill command for boxes.
+- `get_build_area`: Returns the currently defined build area bounds.
+- `get_blocks_in_region`: Inspect block data in a specific area.
+- `get_world_state`: Monitor time, weather, and world info.
+- `run_minecraft_command`: **God-mode**: Execute ANY raw Minecraft command.
+- `spawn_entities`: **God-mode**: Mass-spawn mobs or entities.
+- `control_world`: **God-mode**: Manipulate weather, time, and gamerules.
+- `place_command_block`: **Automation**: Precise placement of impulse/repeating command blocks with scripts.
+- `place_block` / `fill_area`: Precise or mass block placement.
 - `render_image_to_screen`: Optimized image-to-block rendering.
 - `clear_screen`: Wipes rendered screens at a specific location.
 
-## GitHub Push Instructions
 
-1. Create a new repository on GitHub named `mc-mcp-server`.
-2. run the following in this directory:
-   ```bash
-   git init
-   git add .
-   git commit -m "initial commit: Minecraft OverWatch MCP Server"
-   git remote add origin https://github.com/YOUR_USERNAME/mc-mcp-server.git
-   git push -u origin main
-   ```
+
+## Development
+
+Run unit tests:
+```bash
+python -m unittest tests/test_utils.py
+```
+
+## License
+MIT License - see [LICENSE](LICENSE) for details.

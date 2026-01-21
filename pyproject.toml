@@ -2,13 +2,23 @@
 name = "mc-mcp-server"
 version = "0.1.0"
 description = "Minecraft OverWatch MCP Server for high-speed block editing and data visualization."
+authors = [
+    {name = "Daniel Shorstein", email = "daniel@example.com"}
+]
+readme = "README.md"
+keywords = ["minecraft", "mcp", "gdmc", "automation"]
 dependencies = [
     "mcp",
     "requests",
     "pillow",
     "numpy",
+    "fastmcp",
 ]
+
+[project.scripts]
+mc-mcp = "server:mcp.run"
 
 [build-system]
 requires = ["setuptools", "wheel"]
 build-backend = "setuptools.build_meta"
+
