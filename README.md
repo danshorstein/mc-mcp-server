@@ -22,7 +22,7 @@ The easiest way to run this server is via `uvx` (part of the [uv](https://astral
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/YOUR_USERNAME/mc-mcp-server",
+        "git+https://github.com/danshorstein/mc-mcp-server",
         "mc-mcp"
       ],
       "env": {
